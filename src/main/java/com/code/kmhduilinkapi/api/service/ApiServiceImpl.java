@@ -8,6 +8,8 @@ import com.code.kmhduilinkapi.api.repository.ApiRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class ApiServiceImpl implements ApiService {
     @Autowired
@@ -18,7 +20,7 @@ public class ApiServiceImpl implements ApiService {
         String link = linkRequestDTO.getLink();
         String customLink = linkRequestDTO.getCustomLink();
 
-        var linkDatabase = apiRepository.findByCustomLink(customLink);
+        Optional<Link> linkDatabase = apiRepository.findByCustomLink(customLink);
 
         if (!linkDatabase.isPresent()) {
 
@@ -33,7 +35,7 @@ public class ApiServiceImpl implements ApiService {
 
     @Override
     public String getLink(String customLink) {
-        var linkDatabase = apiRepository.findByCustomLink(customLink);
+        Optional<Link> linkDatabase = apiRepository.findByCustomLink(customLink);
 
         if(linkDatabase.isPresent()){
             return linkDatabase.get().getLink();
